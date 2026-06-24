@@ -107,6 +107,23 @@ function splitStatements(sql) {
       continue;
     }
 
+    // Dollar-quoting: $$...$$ or $tag$...$tag$
+    if (ch === '$') {
+      let tagEnd = i + 1;
+      while (tagEnd < sql.length && /[A-Za-z0-9_]/.test(sql[tagEnd])) tagEnd++;
+      if (tagEnd < sql.length && sql[tagEnd] === '$') {
+        const tag = sql.slice(i, tagEnd + 1);
+        const closeIdx = sql.indexOf(tag, tagEnd + 1);
+        if (closeIdx !== -1) {
+          cur += sql.slice(i, closeIdx + tag.length);
+          i = closeIdx + tag.length;
+          continue;
+        }
+      }
+      cur += ch; i++;
+      continue;
+    }
+
     if (ch === "'") {
       cur += ch; i++;
       while (i < sql.length) {

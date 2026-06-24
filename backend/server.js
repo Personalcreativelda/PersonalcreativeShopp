@@ -56,8 +56,10 @@ const app = express();
 const PORT = process.env.PORT || 3060;
 
 // ── CORS ──────────────────────────────────────────────────────────────────────
-const extraOrigins = (process.env.FRONTEND_URL || '')
-  .split(',')
+const extraOrigins = [
+  ...(process.env.FRONTEND_URL || '').split(','),
+  ...(process.env.APP_URL       || '').split(','),
+]
   .map(o => o.trim().replace(/\/$/, ''))
   .filter(Boolean);
 
@@ -67,21 +69,28 @@ const allowedOrigins = [
   'http://localhost:5173',
   'http://localhost:4173',
   'http://localhost:3000',
-  ...extraOrigins
+  ...extraOrigins,
 ];
+
+// Extrai domínio base para permitir todos os subdomínios (ex: *.personalcreativemz.com)
+const allowedBaseDomains = extraOrigins
+  .map(o => { try { return new URL(o).hostname.split('.').slice(-2).join('.'); } catch { return null; } })
+  .filter(Boolean);
 
 app.use(cors({
   origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      // Permitir em dev – qualquer localhost
-      if (origin?.startsWith('http://localhost:')) {
-        callback(null, true);
-      } else {
-        callback(new Error(`CORS: Origem não permitida: ${origin}`));
-      }
-    }
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) return callback(null, true);
+    if (origin.startsWith('http://localhost:')) return callback(null, true);
+
+    // Permitir todos os subdomínios dos domínios configurados
+    try {
+      const originHost = new URL(origin).hostname;
+      const baseDomain = originHost.split('.').slice(-2).join('.');
+      if (allowedBaseDomains.includes(baseDomain)) return callback(null, true);
+    } catch { /* ignora URLs malformadas */ }
+
+    callback(new Error(`CORS: Origem não permitida: ${origin}`));
   },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],

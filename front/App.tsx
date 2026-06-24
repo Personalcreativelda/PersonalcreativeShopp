@@ -141,15 +141,7 @@ const AboutUsWithLoginPrompt: React.FC<{
 // Rate limiting constants removed (moved to Login.tsx)
 // Helper functions removed (moved to Login.tsx)
 
-// Auth / Layout - lazy
-const Login = lazy(() => import('./modules/auth/pages/Login').then(m => ({ default: m.Login })));
-const AdminLoginPage = lazy(() => import('./modules/auth/pages/AdminLogin').then(m => ({ default: m.AdminLogin })));
-
-// Caminho do painel admin — configurado via variável de ambiente
-const ADMIN_LOGIN_PATH = import.meta.env.VITE_ADMIN_URL || '/painel';
 import { CompatibilityRedirect } from './components/CompatibilityRedirect';
-const PublicLayout = lazy(() => import('./components/layouts/PublicLayout').then(m => ({ default: m.PublicLayout })));
-const AdminLayout = lazy(() => import('./components/layouts/AdminLayout').then(m => ({ default: m.AdminLayout })));
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { ShopProvider } from './contexts/ShopContext';
 import { getAdminPath } from './modules/core/routes/adminRoutes';
@@ -160,6 +152,15 @@ import { useAppDataHandlers } from './modules/core/hooks/useAppDataHandlers';
 import { useOperationProgress } from './modules/core/hooks/useOperationProgress';
 import { OperationOverlay } from './modules/core/components/ui/OperationOverlay';
 import { useAnalytics } from './modules/core/hooks/useAnalytics';
+
+// Auth / Layout - lazy
+const Login = lazy(() => import('./modules/auth/pages/Login').then(m => ({ default: m.Login })));
+const AdminLoginPage = lazy(() => import('./modules/auth/pages/AdminLogin').then(m => ({ default: m.AdminLogin })));
+const PublicLayout = lazy(() => import('./components/layouts/PublicLayout').then(m => ({ default: m.PublicLayout })));
+const AdminLayout = lazy(() => import('./components/layouts/AdminLayout').then(m => ({ default: m.AdminLayout })));
+
+// Caminho do painel admin — configurado via variável de ambiente
+const ADMIN_LOGIN_PATH = import.meta.env.VITE_ADMIN_URL || '/painel';
 
 const App = () => {
   const navigate = useNavigate();
@@ -962,9 +963,11 @@ const App = () => {
             currentUser ? (
               <Navigate to="/admin" replace />
             ) : (
-              <Suspense fallback={<PageLoadingFallback />}>
-                <AdminLoginPage onLogin={handleAdminLogin} />
-              </Suspense>
+              <ErrorBoundary areaName="Admin Login" onBack={() => window.location.href = '/'} backLabel="Voltar à loja">
+                <Suspense fallback={<PageLoadingFallback />}>
+                  <AdminLoginPage onLogin={handleAdminLogin} />
+                </Suspense>
+              </ErrorBoundary>
             )
           } />
           <Route path="/*" element={
