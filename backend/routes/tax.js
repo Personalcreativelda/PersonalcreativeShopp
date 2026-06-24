@@ -68,8 +68,8 @@ const mapConfig = (r) => ({
   themeRadius:        r.theme_radius || '',
 });
 
-// GET /api/tax/config
-router.get('/config', authMiddleware, async (req, res) => {
+// GET /api/tax/config — público (Logo e temas carregam sem token)
+router.get('/config', async (req, res) => {
   try {
     const { rows } = await pool.query('SELECT * FROM tax_config WHERE id = 1');
     res.json(rows[0] ? mapConfig(rows[0]) : {});

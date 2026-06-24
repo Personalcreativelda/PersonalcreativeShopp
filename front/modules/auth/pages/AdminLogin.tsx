@@ -143,31 +143,34 @@ export const AdminLogin = ({ onLogin }: { onLogin: (user: User) => void }) => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-950 flex items-center justify-center p-4">
-      <div className="max-w-md w-full">
-        <div className="bg-gray-900 rounded-2xl shadow-2xl border border-gray-800 p-8">
-          <div className="text-center mb-8">
-            <div className="mb-4 flex justify-center">
-              <Logo className="h-10" isDarkMode />
+    // "dark" força as variáveis CSS do modo escuro da dashboard (definidas em index.html)
+    <div className="dark min-h-screen bg-surface-base flex items-center justify-center p-4">
+      <div className="max-w-sm w-full">
+        <div className="bg-surface-raised rounded-xl shadow-xl border border-border-default p-7">
+
+          {/* Cabeçalho */}
+          <div className="text-center mb-7">
+            <div className="mb-3 flex justify-center">
+              <Logo height={38} isDarkMode />
             </div>
-            <div className="inline-flex items-center gap-2 bg-brand-900/40 border border-brand-700/50 text-brand-400 text-xs font-semibold px-3 py-1.5 rounded-full mb-3">
-              <ShieldCheck className="w-3.5 h-3.5" />
+            <div className="inline-flex items-center gap-1.5 bg-brand-900/30 border border-brand-700/40 text-brand-400 text-xs font-semibold px-3 py-1 rounded-full mb-3">
+              <ShieldCheck className="w-3 h-3" />
               Área Administrativa
             </div>
-            <h1 className="text-xl font-bold text-white">Acesso ao Painel</h1>
-            <p className="text-gray-500 text-sm mt-1">Restrito a administradores e staff</p>
+            <h1 className="text-lg font-bold text-content-primary">Acesso ao Painel</h1>
+            <p className="text-content-muted text-xs mt-0.5">Restrito a administradores e staff</p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-400 mb-1">Email</label>
+              <label className="block text-xs font-medium text-content-secondary mb-1.5">Email</label>
               <input
                 id="admin-email"
                 name="email"
                 autoComplete="email"
                 type="email"
                 required
-                className="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 text-white placeholder-gray-600 focus:ring-2 focus:ring-brand-500 focus:border-transparent outline-none transition-all"
+                className="w-full px-3.5 py-2.5 rounded-lg bg-surface-overlay border border-border-default text-content-primary placeholder-content-muted focus:ring-2 focus:ring-brand-500 focus:border-transparent outline-none transition-all text-sm"
                 placeholder="admin@empresa.com"
                 value={email}
                 onChange={(e) => e.target.value.length <= 254 && setEmail(e.target.value)}
@@ -176,7 +179,7 @@ export const AdminLogin = ({ onLogin }: { onLogin: (user: User) => void }) => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-400 mb-1">Senha</label>
+              <label className="block text-xs font-medium text-content-secondary mb-1.5">Senha</label>
               <div className="relative">
                 <input
                   id="admin-password"
@@ -184,7 +187,7 @@ export const AdminLogin = ({ onLogin }: { onLogin: (user: User) => void }) => {
                   autoComplete="current-password"
                   type={showPassword ? 'text' : 'password'}
                   required
-                  className="w-full px-4 py-3 pr-12 rounded-lg bg-gray-800 border border-gray-700 text-white placeholder-gray-600 focus:ring-2 focus:ring-brand-500 focus:border-transparent outline-none transition-all"
+                  className="w-full px-3.5 py-2.5 pr-10 rounded-lg bg-surface-overlay border border-border-default text-content-primary placeholder-content-muted focus:ring-2 focus:ring-brand-500 focus:border-transparent outline-none transition-all text-sm"
                   placeholder="••••••"
                   value={password}
                   onChange={(e) => e.target.value.length <= 128 && setPassword(e.target.value)}
@@ -193,9 +196,9 @@ export const AdminLogin = ({ onLogin }: { onLogin: (user: User) => void }) => {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-300 transition-colors"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-content-muted hover:text-content-secondary transition-colors"
                 >
-                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
               </div>
             </div>
@@ -204,20 +207,20 @@ export const AdminLogin = ({ onLogin }: { onLogin: (user: User) => void }) => {
               <button
                 type="button"
                 onClick={() => setShowForgotPasswordModal(true)}
-                className="text-sm text-brand-400 hover:text-brand-300 hover:underline transition-colors"
+                className="text-xs text-brand-400 hover:text-brand-300 hover:underline transition-colors"
               >
                 Esqueceu a senha?
               </button>
             </div>
 
             {lockoutMessage && (
-              <div className="text-orange-400 text-sm bg-orange-900/20 border border-orange-800/50 p-3 rounded-lg text-center">
+              <div className="text-orange-400 text-xs bg-orange-900/20 border border-orange-800/40 p-3 rounded-lg text-center">
                 {lockoutMessage}
               </div>
             )}
 
             {error && (
-              <div className="text-red-400 text-sm bg-red-900/20 border border-red-800/50 p-3 rounded-lg text-center">
+              <div className="text-red-400 text-xs bg-red-900/20 border border-red-800/40 p-3 rounded-lg text-center">
                 {error}
               </div>
             )}
@@ -225,23 +228,23 @@ export const AdminLogin = ({ onLogin }: { onLogin: (user: User) => void }) => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-brand-600 hover:bg-brand-500 text-white font-semibold py-3 px-4 rounded-lg transition-colors shadow-lg disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center gap-2"
+              className="w-full bg-brand-600 hover:bg-brand-500 text-white font-semibold py-2.5 px-4 rounded-lg transition-colors shadow-md disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center gap-2 text-sm mt-1"
             >
               {loading ? (
-                <Loader2 className="w-5 h-5 animate-spin" />
+                <Loader2 className="w-4 h-4 animate-spin" />
               ) : (
                 <>
-                  <ShieldCheck className="w-4 h-4" />
+                  <ShieldCheck className="w-3.5 h-3.5" />
                   Entrar no Painel
                 </>
               )}
             </button>
           </form>
 
-          <div className="mt-6 pt-5 border-t border-gray-800 text-center">
+          <div className="mt-5 pt-4 border-t border-border-default text-center">
             <a
               href="/"
-              className="text-sm text-gray-500 hover:text-gray-400 transition-colors"
+              className="text-xs text-content-muted hover:text-content-secondary transition-colors"
             >
               ← Voltar à loja
             </a>
