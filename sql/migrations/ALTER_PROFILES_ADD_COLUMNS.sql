@@ -1,0 +1,10 @@
+-- Adicionar colunas em falta na tabela profiles
+ALTER TABLE profiles ADD COLUMN IF NOT EXISTS phone          VARCHAR(50);
+ALTER TABLE profiles ADD COLUMN IF NOT EXISTS password_hash  TEXT;
+ALTER TABLE profiles ADD COLUMN IF NOT EXISTS is_active      BOOLEAN NOT NULL DEFAULT true;
+ALTER TABLE profiles ADD COLUMN IF NOT EXISTS is_super_admin BOOLEAN NOT NULL DEFAULT false;
+ALTER TABLE profiles ADD COLUMN IF NOT EXISTS location_id    TEXT;
+ALTER TABLE profiles ADD COLUMN IF NOT EXISTS location_ids   JSONB NOT NULL DEFAULT '[]';
+ALTER TABLE profiles ADD COLUMN IF NOT EXISTS avatar_url     TEXT;
+ALTER TABLE profiles ADD COLUMN IF NOT EXISTS last_login     TIMESTAMPTZ;
+ALTER TABLE profiles ADD COLUMN IF NOT EXISTS updated_at     TIMESTAMPTZ DEFAULT NOW();

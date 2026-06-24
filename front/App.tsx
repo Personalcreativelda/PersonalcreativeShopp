@@ -143,6 +143,10 @@ const AboutUsWithLoginPrompt: React.FC<{
 
 // Auth / Layout - lazy
 const Login = lazy(() => import('./modules/auth/pages/Login').then(m => ({ default: m.Login })));
+const AdminLoginPage = lazy(() => import('./modules/auth/pages/AdminLogin').then(m => ({ default: m.AdminLogin })));
+
+// Caminho do painel admin — configurado via variável de ambiente
+const ADMIN_LOGIN_PATH = import.meta.env.VITE_ADMIN_URL || '/painel';
 import { CompatibilityRedirect } from './components/CompatibilityRedirect';
 const PublicLayout = lazy(() => import('./components/layouts/PublicLayout').then(m => ({ default: m.PublicLayout })));
 const AdminLayout = lazy(() => import('./components/layouts/AdminLayout').then(m => ({ default: m.AdminLayout })));
@@ -257,6 +261,10 @@ const App = () => {
 
   // Redirecionar pé¡ginas administrativas para Settings (apenas quando néo estamos em settings)
 
+
+  const handleAdminLogin = useCallback((user: User) => {
+    setCurrentUser(user);
+  }, [setCurrentUser]);
 
   const toggleTheme = () => {
     const newMode = !darkMode;
@@ -947,8 +955,18 @@ const App = () => {
               } />
             </Route>
           ) : (
-            <Route path="/admin/*" element={<Navigate to="/" replace />} />
+            <Route path="/admin/*" element={<Navigate to={ADMIN_LOGIN_PATH} replace />} />
           )}
+          {/* Rota de acesso ao painel admin — URL configurada via VITE_ADMIN_URL */}
+          <Route path={ADMIN_LOGIN_PATH} element={
+            currentUser ? (
+              <Navigate to="/admin" replace />
+            ) : (
+              <Suspense fallback={<PageLoadingFallback />}>
+                <AdminLoginPage onLogin={handleAdminLogin} />
+              </Suspense>
+            )
+          } />
           <Route path="/*" element={
             <ErrorBoundary
               areaName="Página pública"
