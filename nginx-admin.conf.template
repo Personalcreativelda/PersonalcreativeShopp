@@ -2,7 +2,8 @@ server {
     listen 80;
     server_name _;
 
-    # Redirect everything to the main frontend admin login path
+    # Redireciona para o painel admin no frontend principal.
+    # ${ADMIN_REDIRECT_URL} é substituído em runtime pelo envsubst do nginx.
     location / {
         return 301 ${ADMIN_REDIRECT_URL};
     }

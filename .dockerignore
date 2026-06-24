@@ -7,4 +7,3 @@ dist
 .env.production
 backend/
 supabase/
-nginx-admin.conf.template

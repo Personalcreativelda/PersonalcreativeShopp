@@ -183,6 +183,17 @@ app.listen(PORT, async () => {
   console.log(`❤️  Health: http://localhost:${PORT}/health`);
   console.log(`🗄️  DB: ${process.env.PG_HOST}:${process.env.PG_PORT}/${process.env.PG_DATABASE}`);
 
+  // ── Migração automática (activar com RUN_MIGRATIONS=true) ─────────────────
+  if (process.env.RUN_MIGRATIONS === 'true') {
+    try {
+      const { runMigrations } = await import('./migrate.js');
+      const { default: pool }  = await import('./db.js');
+      await runMigrations(pool);
+    } catch (err) {
+      console.error('❌ Erro na migração automática:', err.message);
+    }
+  }
+
   // ── Teste de ligação ao MinIO ──────────────────────────────────────────────
   try {
     const { BUCKET, PUBLIC_URL } = await import('./storage/minio.js');

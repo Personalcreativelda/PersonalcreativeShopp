@@ -23,17 +23,21 @@ services:
         condition: service_healthy
 
   # ── Admin redirect ─────────────────────────────────────────────────────────
-  # Serviço leve: redireciona dash.dominio.com → dominio.com/painel
+  # Serviço leve: redireciona dash.personalcreativemz.com → www.dominio.com/painel
   # No Coolify aparece o campo "Domains for admin" — coloque dash.personalcreativemz.com
+  # Variável obrigatória no Coolify:
+  #   ADMIN_REDIRECT_URL=https://www.personalcreativemz.com/painel
   admin:
     build:
       context: .
       dockerfile: Dockerfile.admin
-      args:
-        ADMIN_REDIRECT_URL: "${APP_URL:-https://www.personalcreativemz.com}${VITE_ADMIN_URL:-/painel}"
     restart: unless-stopped
     expose:
       - "80"
+    environment:
+      # URL completa para onde dash.dominio.com vai redirecionar.
+      # Definir directamente no Coolify → Environment Variables do serviço admin.
+      ADMIN_REDIRECT_URL: "${ADMIN_REDIRECT_URL:-https://www.personalcreativemz.com/painel}"
     depends_on:
       - frontend
 
@@ -53,6 +57,8 @@ services:
       PG_DATABASE: ${PG_DATABASE:-naturerva_erp}
       PG_USER: ${PG_USER:-postgres}
       PG_PASSWORD: ${PG_PASSWORD}
+      # Migração automática: coloca true apenas no PRIMEIRO deploy, depois volta a false
+      RUN_MIGRATIONS: ${RUN_MIGRATIONS:-false}
       # JWT
       JWT_SECRET: ${JWT_SECRET}
       JWT_EXPIRES_IN: ${JWT_EXPIRES_IN:-7d}
