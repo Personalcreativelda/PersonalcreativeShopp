@@ -1,0 +1,9 @@
+server {
+    listen 80;
+    server_name _;
+
+    # Redirect everything to the main frontend admin login path
+    location / {
+        return 301 ${ADMIN_REDIRECT_URL};
+    }
+}

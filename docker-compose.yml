@@ -22,6 +22,22 @@ services:
       backend:
         condition: service_healthy
 
+  # ── Admin redirect ─────────────────────────────────────────────────────────
+  # Serviço leve: redireciona admin.dominio.com → dominio.com/painel
+  # No Coolify aparece o campo "Domains for admin" — coloque admin.seudominio.com
+  admin:
+    image: nginx:1.25-alpine
+    restart: unless-stopped
+    expose:
+      - "80"
+    volumes:
+      - ./nginx-admin.conf.template:/etc/nginx/templates/default.conf.template:ro
+    environment:
+      # URL completa para onde o admin.dominio.com vai redirecionar
+      ADMIN_REDIRECT_URL: "${APP_URL:-https://www.personalcreativemz.com}${VITE_ADMIN_URL:-/painel}"
+    depends_on:
+      - frontend
+
   # ── Backend (Express / Node.js) ─────────────────────────────────────────────
   backend:
     build:
