@@ -1,0 +1,10 @@
+FROM postgres:16-alpine
+
+# Copiar scripts SQL na ordem correcta de execução
+# O PostgreSQL executa os ficheiros de /docker-entrypoint-initdb.d/ em ordem alfabética
+# e APENAS na primeira vez que o container é iniciado (volume vazio)
+
+COPY sql/PARTE_1_TABELAS_BASE.sql       /docker-entrypoint-initdb.d/01_base.sql
+COPY sql/PARTE_2_TABELAS_TRANSACOES.sql /docker-entrypoint-initdb.d/02_transacoes.sql
+COPY sql/PARTE_3_INDICES_DADOS.sql      /docker-entrypoint-initdb.d/03_indices.sql
+COPY sql/fixes/ADD_PRODUCT_CONTENT_FIELDS.sql /docker-entrypoint-initdb.d/04_fixes.sql
