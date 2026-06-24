@@ -79,7 +79,9 @@ const MIGRATIONS = [
   { file: 'migrations/FIX_CHAT_SCHEMA.sql',                      dir: SQL_DIR },
   // 28. Zonas de entrega de Maputo (seed)
   { file: 'migrations/SEED_DELIVERY_ZONES_MAPUTO.sql',           dir: SQL_DIR },
-  // 29. Pontos retroativos para pedidos já entregues (corre por último)
+  // 29. Tabela de posts do blog
+  { file: 'migrations/CREATE_BLOG_POSTS.sql',                    dir: SQL_DIR },
+  // 30. Pontos retroativos para pedidos já entregues (corre por último)
   { file: 'migrations/RETROACTIVE_AWARD_POINTS.sql',             dir: SQL_DIR },
 ];
 

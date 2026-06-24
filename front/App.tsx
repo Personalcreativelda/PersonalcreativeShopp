@@ -152,10 +152,10 @@ import { useAppDataHandlers } from './modules/core/hooks/useAppDataHandlers';
 import { useOperationProgress } from './modules/core/hooks/useOperationProgress';
 import { OperationOverlay } from './modules/core/components/ui/OperationOverlay';
 import { useAnalytics } from './modules/core/hooks/useAnalytics';
+import { AdminLogin as AdminLoginPage } from './modules/auth/pages/AdminLogin';
 
-// Auth / Layout - lazy
+// Layout / pages — lazy loaded
 const Login = lazy(() => import('./modules/auth/pages/Login').then(m => ({ default: m.Login })));
-const AdminLoginPage = lazy(() => import('./modules/auth/pages/AdminLogin').then(m => ({ default: m.AdminLogin })));
 const PublicLayout = lazy(() => import('./components/layouts/PublicLayout').then(m => ({ default: m.PublicLayout })));
 const AdminLayout = lazy(() => import('./components/layouts/AdminLayout').then(m => ({ default: m.AdminLayout })));
 
@@ -964,9 +964,7 @@ const App = () => {
               <Navigate to="/admin" replace />
             ) : (
               <ErrorBoundary areaName="Admin Login" onBack={() => window.location.href = '/'} backLabel="Voltar à loja">
-                <Suspense fallback={<PageLoadingFallback />}>
-                  <AdminLoginPage onLogin={handleAdminLogin} />
-                </Suspense>
+                <AdminLoginPage onLogin={handleAdminLogin} />
               </ErrorBoundary>
             )
           } />

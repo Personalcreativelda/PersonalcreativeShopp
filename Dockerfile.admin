@@ -1,9 +1,9 @@
 FROM nginx:1.25-alpine
 
-# Template processado em runtime pelo entrypoint oficial do nginx via envsubst.
-# A variável ADMIN_REDIRECT_URL é lida do ambiente no arranque do container,
-# não baked no build — assim podes mudar APP_URL/VITE_ADMIN_URL no Coolify
-# sem precisar de rebuild.
+# Valor padrão — pode ser sobrescrito em runtime via env var no Coolify.
+# ENV garante que envsubst sempre encontra a variável, mesmo sem override.
+ENV ADMIN_REDIRECT_URL=https://grafica.personalcreativemz.com/painel
+
 COPY nginx-admin.conf.template /etc/nginx/templates/default.conf.template
 
 EXPOSE 80
