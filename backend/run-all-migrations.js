@@ -17,7 +17,10 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 dotenv.config({ path: join(__dirname, '.env') });
 
 // ── Ordem de execução (dependências respeitadas) ───────────────────────────────
-const SQL_DIR = resolve(__dirname, '../sql');
+// Em Docker: sql/ está em /app/sql/ — em dev local está em ../sql/
+const SQL_DIR = existsSync(resolve(__dirname, 'sql'))
+  ? resolve(__dirname, 'sql')
+  : resolve(__dirname, '../sql');
 
 const MIGRATIONS = [
   // 1. Tabelas base (profiles, roles, permissions, products, categories…)

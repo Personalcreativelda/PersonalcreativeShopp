@@ -2,14 +2,18 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-# Install dependencies
-COPY package.json ./
+# Contexto de build é a raiz do projecto (definido no docker-compose.yml)
+# Instalar dependências primeiro (melhor cache de layers)
+COPY backend/package.json ./
 RUN npm install --omit=dev
 
-# Copy source code (inclui storage/, routes/, middleware/)
-COPY . .
+# Copiar código do backend
+COPY backend/ ./
 
-# Create uploads directory
+# Copiar ficheiros SQL para dentro do container (/app/sql/)
+COPY sql/ ./sql/
+
+# Directório de uploads
 RUN mkdir -p uploads
 
 EXPOSE 3060

@@ -37,15 +37,15 @@ services:
     environment:
       # URL completa para onde dash.dominio.com vai redirecionar.
       # Definir directamente no Coolify → Environment Variables do serviço admin.
-      ADMIN_REDIRECT_URL: "${ADMIN_REDIRECT_URL:-https://www.personalcreativemz.com/painel}"
+      ADMIN_REDIRECT_URL: "${ADMIN_REDIRECT_URL:-https://grafica.personalcreativemz.com/painel}"
     depends_on:
       - frontend
 
   # ── Backend (Express / Node.js) ─────────────────────────────────────────────
   backend:
     build:
-      context: ./backend
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: backend/Dockerfile
     restart: unless-stopped
     expose:
       - "3060"
