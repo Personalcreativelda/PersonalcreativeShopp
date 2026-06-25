@@ -159,8 +159,11 @@ const Login = lazy(() => import('./modules/auth/pages/Login').then(m => ({ defau
 const PublicLayout = lazy(() => import('./components/layouts/PublicLayout').then(m => ({ default: m.PublicLayout })));
 const AdminLayout = lazy(() => import('./components/layouts/AdminLayout').then(m => ({ default: m.AdminLayout })));
 
-// Caminho do painel admin — configurado via variável de ambiente
-const ADMIN_LOGIN_PATH = import.meta.env.VITE_ADMIN_URL || '/painel';
+// Caminho do painel admin — aceita path simples (/painel) ou URL completo
+const _adminUrl = import.meta.env.VITE_ADMIN_URL || '/painel';
+const ADMIN_LOGIN_PATH = (() => {
+  try { return new URL(_adminUrl).pathname; } catch { return _adminUrl.startsWith('/') ? _adminUrl : '/' + _adminUrl; }
+})();
 
 const App = () => {
   const navigate = useNavigate();

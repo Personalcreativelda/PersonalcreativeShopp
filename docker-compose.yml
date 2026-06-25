@@ -59,6 +59,8 @@ services:
       PG_PASSWORD: ${PG_PASSWORD}
       # Migração automática: coloca true apenas no PRIMEIRO deploy, depois volta a false
       RUN_MIGRATIONS: ${RUN_MIGRATIONS:-false}
+      # Bootstrap do super-admin: email do utilizador a promover (corre sempre que o servidor inicia)
+      SUPER_ADMIN_EMAIL: ${SUPER_ADMIN_EMAIL:-}
       # JWT
       JWT_SECRET: ${JWT_SECRET}
       JWT_EXPIRES_IN: ${JWT_EXPIRES_IN:-7d}

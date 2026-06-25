@@ -203,6 +203,27 @@ app.listen(PORT, async () => {
     }
   }
 
+  // ── Super-admin bootstrap (SUPER_ADMIN_EMAIL=email@dominio.com) ────────────
+  if (process.env.SUPER_ADMIN_EMAIL) {
+    try {
+      const { default: pool } = await import('./db.js');
+      await pool.query(
+        `UPDATE profiles SET role = 'SUPER_ADMIN', is_super_admin = TRUE, updated_at = NOW() WHERE email = $1`,
+        [process.env.SUPER_ADMIN_EMAIL]
+      );
+      await pool.query(
+        `INSERT INTO user_roles (user_id, role_id)
+         SELECT p.id, r.id FROM profiles p, roles r
+         WHERE p.email = $1 AND r.name = 'SUPER_ADMIN'
+         ON CONFLICT (user_id, role_id) DO NOTHING`,
+        [process.env.SUPER_ADMIN_EMAIL]
+      );
+      console.log(`✅ Super-admin: ${process.env.SUPER_ADMIN_EMAIL}`);
+    } catch (err) {
+      console.warn(`⚠️  Super-admin bootstrap: ${err.message}`);
+    }
+  }
+
   // ── Teste de ligação ao MinIO ──────────────────────────────────────────────
   try {
     const { BUCKET, PUBLIC_URL } = await import('./storage/minio.js');
