@@ -23,7 +23,7 @@ export interface RatingStats {
 const statsCache = new Map<string, { data: RatingStats; ts: number }>();
 const CACHE_TTL = 30_000;
 
-const STORAGE_KEY = 'naturerva_reviews';
+const STORAGE_KEY = 'pcshop_reviews';
 
 function getLocalReviews(): ProductReview[] {
   try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch { return []; }
@@ -69,14 +69,10 @@ export async function getProductReviews(productId: string): Promise<ProductRevie
 export async function getAllReviews(limit = 24): Promise<ProductReview[]> {
   try {
     const data = await api.get<ProductReview[]>(`/reviews?limit=${limit}`);
-    if (Array.isArray(data) && data.length > 0) return data;
-  } catch { /* fall through */ }
-
-  // localStorage fallback (shows reviews written on this device)
-  return getLocalReviews()
-    .filter(r => r.comment?.trim() && r.rating >= 4)
-    .sort((a, b) => b.created_at.localeCompare(a.created_at))
-    .slice(0, limit);
+    return Array.isArray(data) ? data : [];
+  } catch {
+    return [];
+  }
 }
 
 // ── Submit ────────────────────────────────────────────────────────────────────

@@ -458,10 +458,10 @@ export const ProductLandingPage: React.FC = () => {
                     <div className="border-b border-border-default flex flex-wrap">
                         {(
                             [
-                                { key: 'description', label: 'Descrição Completa' },
-                                { key: 'benefits', label: 'Benefícios' },
-                                { key: 'usage', label: 'Como Usar' },
-                                { key: 'ingredients', label: 'Ingredientes' },
+                                { key: 'description', label: 'Descrição' },
+                                { key: 'benefits', label: 'Características' },
+                                { key: 'usage', label: 'Aplicação' },
+                                { key: 'ingredients', label: 'Especificações' },
                             ] as const
                         ).map(({ key, label }) => (
                             <button
@@ -494,7 +494,7 @@ export const ProductLandingPage: React.FC = () => {
                                     ))}
                                 </div>
                             ) : (
-                                <p className="text-content-muted text-sm">Sem informação de benefícios disponível.</p>
+                                <p className="text-content-muted text-sm">Sem informação de características disponível.</p>
                             )
                         )}
                         {selectedTab === 'usage' && (
@@ -513,7 +513,7 @@ export const ProductLandingPage: React.FC = () => {
                                     ))}
                                 </ol>
                             ) : (
-                                <p className="text-content-muted text-sm">Sem instruções de uso disponíveis.</p>
+                                <p className="text-content-muted text-sm">Sem informações de aplicação disponíveis.</p>
                             )
                         )}
                         {selectedTab === 'ingredients' && (
@@ -522,7 +522,7 @@ export const ProductLandingPage: React.FC = () => {
                                     {(product as any).ingredients}
                                 </p>
                             ) : (
-                                <p className="text-content-muted text-sm">Sem lista de ingredientes disponível.</p>
+                                <p className="text-content-muted text-sm">Sem especificações técnicas disponíveis.</p>
                             )
                         )}
                     </div>

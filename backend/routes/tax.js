@@ -41,6 +41,7 @@ pool.query(`ALTER TABLE tax_config ADD COLUMN IF NOT EXISTS bank_accounts JSONB 
 pool.query(`ALTER TABLE tax_config ADD COLUMN IF NOT EXISTS theme_primary_color VARCHAR(20) DEFAULT ''`).catch(() => {});
 pool.query(`ALTER TABLE tax_config ADD COLUMN IF NOT EXISTS theme_font VARCHAR(100) DEFAULT ''`).catch(() => {});
 pool.query(`ALTER TABLE tax_config ADD COLUMN IF NOT EXISTS theme_radius VARCHAR(20) DEFAULT ''`).catch(() => {});
+pool.query(`ALTER TABLE tax_config ADD COLUMN IF NOT EXISTS site_title VARCHAR(200) DEFAULT ''`).catch(() => {});
 
 const mapConfig = (r) => ({
   companyName:        r.company_name,
@@ -66,6 +67,7 @@ const mapConfig = (r) => ({
   themePrimaryColor:  r.theme_primary_color || '',
   themeFont:          r.theme_font || '',
   themeRadius:        r.theme_radius || '',
+  siteTitle:          r.site_title || '',
 });
 
 // GET /api/tax/config — público (Logo e temas carregam sem token)
@@ -112,6 +114,7 @@ router.put('/config', authMiddleware, async (req, res) => {
         theme_primary_color  = COALESCE($16, theme_primary_color),
         theme_font           = COALESCE($17, theme_font),
         theme_radius         = COALESCE($18, theme_radius),
+        site_title           = COALESCE($19, site_title),
         updated_at           = NOW()
        WHERE id = 1`,
       [c.companyName, c.companyNuit, c.companyAddress, c.companyPhone,
@@ -120,7 +123,8 @@ router.put('/config', authMiddleware, async (req, res) => {
        c.bankAccountHolder ?? null, c.bankSwift ?? null,
        c.logoUrl || null, c.logoIconUrl || null,
        c.bankAccounts !== undefined ? JSON.stringify(c.bankAccounts) : null,
-       c.themePrimaryColor || null, c.themeFont || null, c.themeRadius || null]
+       c.themePrimaryColor || null, c.themeFont || null, c.themeRadius || null,
+       c.siteTitle || null]
     );
     const { rows } = await pool.query('SELECT * FROM tax_config WHERE id = 1');
     res.json(mapConfig(rows[0]));

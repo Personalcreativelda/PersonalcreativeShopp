@@ -15,6 +15,7 @@ type TaxConfig = {
  companyPhone: string; companyEmail: string;
  vatRate: number; invoicePrefix: string;
  logoUrl?: string; logoIconUrl?: string;
+ siteTitle?: string;
 };
 
 type TaxReport = {
@@ -41,7 +42,7 @@ export const Financas: React.FC<FinancasProps> = ({ showToast }) => {
  const [config, setConfig] = useState<TaxConfig>({
  companyName: '', companyNuit: '', companyAddress: '',
  companyPhone: '', companyEmail: '', vatRate: 16, invoicePrefix: 'FACT',
- logoUrl: '', logoIconUrl: '',
+ logoUrl: '', logoIconUrl: '', siteTitle: '',
  });
  const [saving, setSaving] = useState(false);
  const [uploadingLogo, setUploadingLogo] = useState(false);
@@ -263,6 +264,19 @@ ${s.summary?.expectedCash !== undefined ? `<p class="bold">Fundo esperado em cai
  </div>
  </div>
  </div>
+ </div>
+
+ {/* Título da página (navegador) */}
+ <div>
+ <label className={labelCls}>Título da página (separador do navegador)</label>
+ <input
+   value={config.siteTitle ?? ''}
+   onChange={e => setConfig(p => ({ ...p, siteTitle: e.target.value }))}
+   className={inputCls}
+   placeholder="ex: PersonalCreative — Gráfica &amp; Serigrafia"
+   maxLength={120}
+ />
+ <p className="text-xs text-content-muted mt-1">Aparece no separador do browser ao lado do favicon.</p>
  </div>
 
  <hr className="border-border-default" />

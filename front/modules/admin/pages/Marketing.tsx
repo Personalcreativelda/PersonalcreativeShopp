@@ -44,7 +44,7 @@ export const Marketing: React.FC<{ showToast: (msg: string, type: 'success' | 'e
  const [sending, setSending] = useState(false);
 
  // WhatsApp form
- const [waMessage, setWaMessage] = useState('Olá {nome}! 🌿 Temos novidades especiais para si na NaturErva. Visite-nos em https://www.natur-erva.co.mz');
+ const [waMessage, setWaMessage] = useState('Olá {nome}! Temos novidades especiais para si. Visite a nossa loja em {link}');
  const [waLinks, setWaLinks] = useState<WALink[]>([]);
  const [waResult, setWaResult] = useState<{ mode: string; sent?: number; failed?: number } | null>(null);
  const [generatingWA, setGeneratingWA] = useState(false);
@@ -195,7 +195,7 @@ export const Marketing: React.FC<{ showToast: (msg: string, type: 'success' | 'e
  <input
  value={subject} onChange={e => setSubject(e.target.value)}
  className="w-full px-3 py-2 rounded-lg border border-border-default bg-surface-base text-content-primary text-sm focus:outline-none focus:ring-2 focus:ring-brand-500"
- placeholder="Ex: Novidades exclusivas para si 🌿"
+ placeholder="Ex: Novidades exclusivas para si!"
  />
  </div>
  <div>
@@ -239,16 +239,33 @@ export const Marketing: React.FC<{ showToast: (msg: string, type: 'success' | 'e
  <div className="bg-surface-overlay rounded-xl border border-border-default p-5 space-y-4">
  <h3 className="font-semibold text-content-primary flex items-center gap-2"><MessageCircle className="w-4 h-4" /> Mensagem WhatsApp</h3>
  <div>
- <label className="block text-xs font-medium text-content-secondary mb-1">Mensagem <span className="text-content-muted">(use {'{'}nome{'}'} para personalizar)</span></label>
+ <label className="block text-xs font-medium text-content-secondary mb-1">Mensagem</label>
  <textarea
  value={waMessage} onChange={e => setWaMessage(e.target.value)}
  rows={4}
  className="w-full px-3 py-2 rounded-lg border border-border-default bg-surface-base text-content-primary text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 resize-none"
  />
+ {/* Variáveis clicáveis */}
+ <div className="flex flex-wrap gap-1.5 mt-2">
+ <span className="text-xs text-content-muted mr-1">Inserir variável:</span>
+ {['{nome}', '{loja}', '{link}', '{telefone}', '{pedido}', '{pontos}'].map(v => (
+   <button key={v} type="button"
+     onClick={() => setWaMessage(m => m + v)}
+     className="px-2 py-0.5 rounded-md bg-surface-raised border border-border-default text-xs text-content-secondary hover:text-brand-600 hover:border-brand-500 transition-colors font-mono"
+   >{v}</button>
+ ))}
  </div>
- <p className="text-xs text-content-muted bg-surface-raised rounded-lg px-3 py-2">
- 💡 Se tiveres a <strong>API WhatsApp Business</strong> configurada, as mensagens são enviadas automaticamente. Caso contrário, gera links que podes clicar um a um.
- </p>
+ </div>
+ <div className="bg-surface-raised rounded-lg px-3 py-2.5 text-xs text-content-secondary space-y-1 border border-border-default">
+ <p className="font-semibold text-content-primary">💬 WhatsApp Business API (envio automático)</p>
+ <p>Para envio automático, define no servidor (Coolify → backend → variáveis de ambiente):</p>
+ <div className="font-mono bg-surface-overlay rounded px-2 py-1.5 mt-1 space-y-0.5 text-xs">
+   <div><span className="text-brand-500">WHATSAPP_ACCESS_TOKEN</span>=EAAx...</div>
+   <div><span className="text-brand-500">WHATSAPP_PHONE_NUMBER_ID</span>=12345678</div>
+   <div><span className="text-brand-500">WHATSAPP_API_VERSION</span>=v19.0</div>
+ </div>
+ <p className="text-content-muted">Sem essas variáveis, gera links para envio manual.</p>
+ </div>
  <button
  onClick={handleSendWA}
  disabled={generatingWA || recipientCount === 0}

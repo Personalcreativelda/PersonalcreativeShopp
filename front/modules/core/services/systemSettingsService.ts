@@ -43,6 +43,7 @@ export const getSystemSettings = async (): Promise<SystemSettings> => {
       ...(config.themePrimaryColor ? { primary_color: config.themePrimaryColor } : {}),
       ...(config.themeFont ? { theme_font: config.themeFont } : {}),
       ...(config.themeRadius ? { theme_radius: config.themeRadius } : {}),
+      ...(config.siteTitle ? { system_name: config.siteTitle } : {}),
     };
 
     localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), data: settings }));

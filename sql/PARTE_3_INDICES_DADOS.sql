@@ -99,22 +99,28 @@ ON CONFLICT (name) DO NOTHING;
 
 -- DADOS INICIAIS - UNITS
 INSERT INTO units (name, abbreviation, type) VALUES
-('Quilograma', 'kg', 'weight'),
-('Grama', 'g', 'weight'),
-('Litro', 'l', 'volume'),
-('Mililitro', 'ml', 'volume'),
-('Unidade', 'un', 'unit'),
-('Dúzia', 'dz', 'unit'),
-('Pacote', 'pct', 'unit')
+('Unidade',        'un',  'unit'),
+('Pacote',         'pct', 'unit'),
+('Caixa',          'cx',  'unit'),
+('Resma',          'rm',  'unit'),
+('Rolo',           'rl',  'unit'),
+('Metro',          'm',   'unit'),
+('Metro Quadrado', 'm2',  'unit'),
+('Litro',          'l',   'volume'),
+('Mililitro',      'ml',  'volume'),
+('Quilograma',     'kg',  'weight'),
+('Grama',          'g',   'weight')
 ON CONFLICT (abbreviation) DO NOTHING;
 
 -- DADOS INICIAIS - CATEGORIES
 INSERT INTO categories (name) VALUES
-('Carne'),
-('Polpa'),
-('Verdura'),
-('Ovos'),
-('Óleo'),
+('Papel e Cartão'),
+('Tintas e Toners'),
+('Serigrafia'),
+('Impressão Digital'),
+('Plastificação e Acabamento'),
+('Encadernação'),
+('Material de Escritório'),
 ('Geral')
 ON CONFLICT (name) DO NOTHING;
 

@@ -81,7 +81,9 @@ const MIGRATIONS = [
   { file: 'migrations/SEED_DELIVERY_ZONES_MAPUTO.sql',           dir: SQL_DIR },
   // 29. Tabela de posts do blog
   { file: 'migrations/CREATE_BLOG_POSTS.sql',                    dir: SQL_DIR },
-  // 30. Pontos retroativos para pedidos já entregues (corre por último)
+  // 30. Categorias e unidades para gráfica e serigrafia
+  { file: 'migrations/SEED_GRAFICA_CATEGORIES_UNITS.sql',        dir: SQL_DIR },
+  // 31. Pontos retroativos para pedidos já entregues (corre por último)
   { file: 'migrations/RETROACTIVE_AWARD_POINTS.sql',             dir: SQL_DIR },
 ];
 

@@ -625,40 +625,40 @@ export const ProductFormModal: React.FC<ProductFormModalProps> = ({
  value={formData.descriptionLong}
  onChange={(e) => setFormData((prev) => ({ ...prev, descriptionLong: e.target.value }))}
  className="w-full px-3 py-2 border border-border-default rounded-lg bg-surface-raised text-content-primary focus:ring-2 focus:ring-brand-500 resize-none"
- placeholder="Descrição detalhada do produto (aparece no separador Descrição Completa)..."
+ placeholder="Descrição detalhada do produto..."
  />
  </div>
 
  <div>
- <label className="block text-sm font-medium text-content-secondary mb-1">Benefícios</label>
+ <label className="block text-sm font-medium text-content-secondary mb-1">Características</label>
  <textarea
  rows={4}
  value={formData.benefits}
  onChange={(e) => setFormData((prev) => ({ ...prev, benefits: e.target.value }))}
  className="w-full px-3 py-2 border border-border-default rounded-lg bg-surface-raised text-content-primary focus:ring-2 focus:ring-brand-500 resize-none"
- placeholder="Liste os benefícios, um por linha (aparece no separador Benefícios)..."
+ placeholder="Liste as características do produto, uma por linha (ex: Alta resolução, Resistente à água)..."
  />
  </div>
 
  <div>
- <label className="block text-sm font-medium text-content-secondary mb-1">Como Usar</label>
+ <label className="block text-sm font-medium text-content-secondary mb-1">Aplicação / Modo de Uso</label>
  <textarea
  rows={4}
  value={formData.howToUse}
  onChange={(e) => setFormData((prev) => ({ ...prev, howToUse: e.target.value }))}
  className="w-full px-3 py-2 border border-border-default rounded-lg bg-surface-raised text-content-primary focus:ring-2 focus:ring-brand-500 resize-none"
- placeholder="Instruções de uso, um passo por linha (aparece no separador Como Usar)..."
+ placeholder="Instruções de aplicação ou uso, um passo por linha..."
  />
  </div>
 
  <div>
- <label className="block text-sm font-medium text-content-secondary mb-1">Ingredientes</label>
+ <label className="block text-sm font-medium text-content-secondary mb-1">Especificações Técnicas</label>
  <textarea
  rows={3}
  value={formData.ingredients}
  onChange={(e) => setFormData((prev) => ({ ...prev, ingredients: e.target.value }))}
  className="w-full px-3 py-2 border border-border-default rounded-lg bg-surface-raised text-content-primary focus:ring-2 focus:ring-brand-500 resize-none"
- placeholder="Lista de ingredientes (aparece no separador Ingredientes)..."
+ placeholder="Especificações técnicas (ex: Gramagem: 90g/m², Formato: A4, Cor: Ciano)..."
  />
  </div>
  </div>

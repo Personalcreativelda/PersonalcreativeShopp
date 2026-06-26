@@ -261,6 +261,11 @@ const App = () => {
     };
     // Executar imediatamente, sem delay
     loadSystemSettings();
+
+    // Recarrega título e favicon quando as settings são guardadas no painel
+    const onLogoUpdated = () => loadSystemSettings();
+    window.addEventListener('logo:updated', onLogoUpdated);
+    return () => window.removeEventListener('logo:updated', onLogoUpdated);
   }, []);
 
   // Redirecionar pé¡ginas administrativas para Settings (apenas quando néo estamos em settings)

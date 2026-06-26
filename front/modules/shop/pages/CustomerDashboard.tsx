@@ -36,11 +36,11 @@ interface AffiliateSnippet {
 }
 
 const MEDALS = [
-  { label: 'Semente',       emoji: '🌱', min: 0,    max: 99,       gradient: 'from-amber-400 to-yellow-500',   textColor: 'text-amber-700',   bg: 'bg-amber-50 dark:bg-amber-900/20'  },
-  { label: 'Raiz',          emoji: '🌿', min: 100,  max: 299,      gradient: 'from-green-400 to-green-500',    textColor: 'text-green-700',   bg: 'bg-green-50 dark:bg-green-900/20'  },
-  { label: 'Broto',         emoji: '🌾', min: 300,  max: 699,      gradient: 'from-emerald-400 to-teal-500',   textColor: 'text-teal-700',    bg: 'bg-teal-50 dark:bg-teal-900/20'    },
-  { label: 'Flor',          emoji: '🌸', min: 700,  max: 1499,     gradient: 'from-pink-400 to-rose-500',      textColor: 'text-pink-700',    bg: 'bg-pink-50 dark:bg-pink-900/20'    },
-  { label: 'Planta Mestre', emoji: '🌳', min: 1500, max: Infinity, gradient: 'from-green-600 to-emerald-700',  textColor: 'text-green-800',   bg: 'bg-green-50 dark:bg-green-900/30'  },
+  { label: 'Esboço',         emoji: '✏️',  min: 0,    max: 99,       gradient: 'from-amber-400 to-yellow-500',   textColor: 'text-amber-700',   bg: 'bg-amber-50 dark:bg-amber-900/20'   },
+  { label: 'Arte Final',     emoji: '🎨',  min: 100,  max: 299,      gradient: 'from-blue-400 to-indigo-500',    textColor: 'text-blue-700',    bg: 'bg-blue-50 dark:bg-blue-900/20'     },
+  { label: 'Impressão',      emoji: '🖨️',  min: 300,  max: 699,      gradient: 'from-violet-400 to-purple-500',  textColor: 'text-purple-700',  bg: 'bg-purple-50 dark:bg-purple-900/20' },
+  { label: 'Acabamento',     emoji: '✨',  min: 700,  max: 1499,     gradient: 'from-emerald-400 to-teal-500',   textColor: 'text-teal-700',    bg: 'bg-teal-50 dark:bg-teal-900/20'     },
+  { label: 'Mestre Gráfico', emoji: '🏆',  min: 1500, max: Infinity, gradient: 'from-yellow-500 to-orange-500',  textColor: 'text-orange-800',  bg: 'bg-orange-50 dark:bg-orange-900/20' },
 ];
 
 const getMedal = (pts: number) => MEDALS.find(m => pts >= m.min && pts <= m.max) || MEDALS[0];

@@ -53,6 +53,7 @@ const MIGRATIONS = [
   { file: 'migrations/FIX_CHAT_SCHEMA.sql',                  dir: SQL_DIR },
   { file: 'migrations/SEED_DELIVERY_ZONES_MAPUTO.sql',       dir: SQL_DIR },
   { file: 'migrations/CREATE_BLOG_POSTS.sql',                dir: SQL_DIR },
+  { file: 'migrations/SEED_GRAFICA_CATEGORIES_UNITS.sql',    dir: SQL_DIR },
   { file: 'migrations/RETROACTIVE_AWARD_POINTS.sql',         dir: SQL_DIR },
 ];
 
